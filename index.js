@@ -1,14 +1,18 @@
-require ('dotenv').config()
-const express = require ('express')
-const app = express ()
+require('dotenv').config()
+const express = require('express')
+const app = express()
 
-app.use ('/places', require('./controllers/places'))
-app.get ('/', (req, res) => {
-    res.send ('hello world')
+app.set('view engine', 'jsx')
+app.engine('jsx', require('express-react-views').createEngine())
+
+app.use('/places', require('./controllers/places'))
+
+app.get('/', (req, res) => {
+  res.send('Hello world home page')
 })
 
-//Wildcard Route kindly tell them page does not exist
-app.get ('*', (req, res) => {
-    res.status(404).send ('<h1>404 Page</>')
+app.get('*', (req, res) => {
+  res.send('404 page')
 })
-app.listen (process.env.PORT)
+
+app.listen(process.env.PORT)
